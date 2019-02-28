@@ -1,12 +1,12 @@
 {
-    "name": "buonzz/composer-library-template",
-    "description": "Boilerplate package for creating other packages.",
-    "keywords": ["template", "composer", "package"],
+    "name": "Pluton/Dhl",
+    "description": "Dhl rest api",
+    "keywords": ["Dhl", "REST", "Api"],
     "license": "DBAD",
     "authors": [
         {
-            "name": "Darwin Biler",
-            "email": "buonzz@gmail.com"
+            "name": "Keshav Joshi",
+            "email": "keshav.istart@gmail.com"
         }
     ],
     "type": "project",
