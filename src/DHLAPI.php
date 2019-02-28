@@ -20,7 +20,7 @@ class DHLAPI{
 	private $api_url = 'https://wsbexpress.dhl.com/rest/sndpt/';
 
 
-	
+	/*Common Request Function*/
 	function sendRequest($calledFunction, $data){
 		/*Creates the endpoint URL*/
 		$request_url = $this->api_url.$calledFunction;
@@ -52,4 +52,37 @@ class DHLAPI{
 		return ($body);
 	}
 
+	/*The Rate request will return DHL’s product capabilities (products, services and estimated delivery time)
+	* and prices (where applicable) for a certain set of input data.
+	*/
+	function rateRequest($rateObj){
+		$rateObj = (array)$rateObj;
+		$rateRequestArray=array();		
+		/*$rateRequestArray = array();
+		$rateRequestArray["ShipmentInfo"]["DropOffType"]=$_POST["DropOffType"];*/
+		$rateRequestArray["RateRequest"]["ClientDetails"]=$rateObj["ClientDetails"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["DropOffType"]=$rateObj["DropOffType"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["ShipTimestamp"]=$rateObj["ShipTimestamp"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["UnitOfMeasurement"]=$rateObj["UnitOfMeasurement"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Content"]=$rateObj["Content"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["PaymentInfo"]=$rateObj["PaymentInfo"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["NextBusinessDay"]=$rateObj["NextBusinessDay"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Account"]=$rateObj["Account"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Ship"]["Shipper"]["City"]=$rateObj["S_City"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Ship"]["Shipper"]["PostalCode"]=$rateObj["S_PostalCode"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Ship"]["Shipper"]["CountryCode"]=$rateObj["S_CountryCode"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Ship"]["Recipient"]["City"]=$rateObj["R_City"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Ship"]["Recipient"]["PostalCode"]=$rateObj["R_PostalCode"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Ship"]["Recipient"]["CountryCode"]=$rateObj["R_CountryCode"];
+
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Packages"]["RequestedPackages"]["@number"]=$rateObj["number"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Packages"]["RequestedPackages"]["@number"]=$rateObj["number"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Packages"]["RequestedPackages"]["Weight"]["Value"]=$rateObj["Weight"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Packages"]["RequestedPackages"]["Dimensions"]["Length"]=$rateObj["Length"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Packages"]["RequestedPackages"]["Dimensions"]["Width"]=$rateObj["Width"];
+		$rateRequestArray["RateRequest"]["RequestedShipment"]["Packages"]["RequestedPackages"]["Dimensions"]["Height"]=$rateObj["Height"];
+ 		
+		return $this->sendRequest('RateRequest', $rateRequestArray);
+		
+	}
 }
